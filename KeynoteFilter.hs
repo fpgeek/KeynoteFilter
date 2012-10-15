@@ -5,7 +5,6 @@ import Codec.Archive.LibZip
 import Text.XML (Name, Node(..), parseLBS_, def)
 import Text.XML.Cursor (node, element, fromDocument, Cursor, (&.//), (&/), content)
 import Data.ByteString.Lazy (ByteString, pack)
-import Data.Word
 import Data.Text (Text, concat, unlines)
 import Data.Text.IO (putStr)
 import Prelude hiding (concat, putStr, unlines)
