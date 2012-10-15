@@ -8,6 +8,7 @@ import qualified Data.ByteString.Lazy as L (ByteString, pack)
 import qualified Data.Text as T (Text, concat)
 import qualified Data.Text.IO as TIO (putStrLn)
 import Control.Monad
+import qualified Data.List as L (intersperse)
 
 main :: IO ()
 main = do
@@ -33,7 +34,7 @@ filteringKeynote = map texts . slideCursors
     where slideCursors = slides . documentCursor
 
 texts :: Cursor -> T.Text
-texts = T.concat . map getContent . paragraphs
+texts = T.concat . L.intersperse "\n" . map getContent . paragraphs
 
 getContent :: Cursor -> T.Text
 getContent = T.concat . (return &.// content)
