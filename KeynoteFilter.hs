@@ -5,7 +5,7 @@ import Codec.Archive.LibZip
 import Text.XML (Name, Node(..), parseLBS_, def)
 import Text.XML.Cursor (node, element, fromDocument, Cursor, (&.//), (&/), content)
 import qualified Data.ByteString.Lazy as L (ByteString, pack)
-import qualified Data.Text as T (Text, concat)
+import qualified Data.Text as T (Text, concat, null, snoc, empty)
 import qualified Data.Text.IO as TIO (putStrLn)
 import Control.Monad
 import qualified Data.List as L (intersperse)
@@ -22,7 +22,6 @@ printContent :: (Int, T.Text) -> IO ()
 printContent (num, text) = do
     putStrLn ("[SLIDE " ++ (show num) ++ "]")
     TIO.putStrLn text
-    putStrLn ""
 
 apxlFileContents :: FilePath -> IO L.ByteString
 apxlFileContents keynoteFile = do
@@ -34,10 +33,12 @@ filteringKeynote = map texts . slideCursors
     where slideCursors = slides . documentCursor
 
 texts :: Cursor -> T.Text
-texts = T.concat . L.intersperse "\n" . map getContent . paragraphs
+texts = T.concat . map getContent . paragraphs
 
 getContent :: Cursor -> T.Text
-getContent = T.concat . (return &.// content)
+getContent c | not $ T.null text = text `T.snoc` '\n'
+             | otherwise         = text
+    where text = (T.concat $ (return &.// content) c)
 
 slides :: Cursor -> [Cursor]
 slides = (return &.// element slideName)
