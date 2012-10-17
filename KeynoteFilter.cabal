@@ -1,0 +1,22 @@
+Name:               KeynoteFilter
+Version:            0.1
+License:            BSD3
+License-File:       License.txt
+Author:             fpgeek
+Maintainer:         fpgeek
+
+Category:           Data
+Synopsis:           extract content in iWorks Keynote file
+Description:
+  extract content in iWorks Keynote file
+
+Build-Type:         Simple
+Cabal-Version:      >= 1.2.3
+Tested-With:        GHC == 7.4.1
+
+Library
+    Build-Depends:
+       base >= 4.0 && < 4.6
+     , LibZip >= 0.10.1
+    GHC-Options:
+      -Wall
